@@ -123,6 +123,8 @@ struct dw_i2c_dev {
 #define ACCESS_SWAP		0x00000001
 #define ACCESS_16BIT		0x00000002
 #define ACCESS_INTR_MASK	0x00000004
+/* Not really an accessor_flag but also set through driver_data */
+#define ACCESS_IS_CHERRYTRAIL	0x00000008
 
 extern int i2c_dw_init(struct dw_i2c_dev *dev);
 extern void i2c_dw_disable(struct dw_i2c_dev *dev);

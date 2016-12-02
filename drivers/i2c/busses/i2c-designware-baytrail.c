@@ -22,7 +22,8 @@
 #include "i2c-designware-core.h"
 
 #define SEMAPHORE_TIMEOUT	100
-#define PUNIT_SEMAPHORE		0x7
+#define PUNIT_SEMAPHORE		((dev->accessor_flags & ACCESS_IS_CHERRYTRAIL) \
+				 ? 0x10e : 0x7)
 #define PUNIT_SEMAPHORE_BIT	BIT(0)
 #define PUNIT_SEMAPHORE_ACQUIRE	BIT(1)
 

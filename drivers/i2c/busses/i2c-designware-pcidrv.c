@@ -45,6 +45,7 @@ enum dw_pci_ctl_id_t {
 	medfield,
 	merrifield,
 	baytrail,
+	cherrytrail,
 	haswell,
 };
 
@@ -174,6 +175,14 @@ static struct dw_pci_controller dw_pci_controllers[] = {
 		.functionality = I2C_FUNC_10BIT_ADDR,
 		.scl_sda_cfg = &hsw_config,
 	},
+	[cherrytrail] = {
+		.bus_num = -1,
+		.bus_cfg = INTEL_MID_STD_CFG | DW_IC_CON_SPEED_FAST,
+		.tx_fifo_depth = 32,
+		.rx_fifo_depth = 32,
+		.functionality = I2C_FUNC_10BIT_ADDR,
+		.scl_sda_cfg = &byt_config,
+	},
 };
 
 #ifdef CONFIG_PM
@@ -241,6 +250,8 @@ static int i2c_dw_pci_probe(struct pci_dev *pdev,
 	dev->base = pcim_iomap_table(pdev)[0];
 	dev->dev = &pdev->dev;
 	dev->irq = pdev->irq;
+	if (id->driver_data == cherrytrail)
+		dev->accessor_flags |= ACCESS_IS_CHERRYTRAIL;
 
 	if (controller->setup) {
 		r = controller->setup(pdev, controller);
@@ -321,13 +332,13 @@ static const struct pci_device_id i2_designware_pci_ids[] = {
 	{ PCI_VDEVICE(INTEL, 0x9c61), haswell },
 	{ PCI_VDEVICE(INTEL, 0x9c62), haswell },
 	/* Braswell / Cherrytrail */
-	{ PCI_VDEVICE(INTEL, 0x22C1), baytrail },
-	{ PCI_VDEVICE(INTEL, 0x22C2), baytrail },
-	{ PCI_VDEVICE(INTEL, 0x22C3), baytrail },
-	{ PCI_VDEVICE(INTEL, 0x22C4), baytrail },
-	{ PCI_VDEVICE(INTEL, 0x22C5), baytrail },
-	{ PCI_VDEVICE(INTEL, 0x22C6), baytrail },
-	{ PCI_VDEVICE(INTEL, 0x22C7), baytrail },
+	{ PCI_VDEVICE(INTEL, 0x22C1), cherrytrail },
+	{ PCI_VDEVICE(INTEL, 0x22C2), cherrytrail },
+	{ PCI_VDEVICE(INTEL, 0x22C3), cherrytrail },
+	{ PCI_VDEVICE(INTEL, 0x22C4), cherrytrail },
+	{ PCI_VDEVICE(INTEL, 0x22C5), cherrytrail },
+	{ PCI_VDEVICE(INTEL, 0x22C6), cherrytrail },
+	{ PCI_VDEVICE(INTEL, 0x22C7), cherrytrail },
 	{ 0,}
 };
 MODULE_DEVICE_TABLE(pci, i2_designware_pci_ids);
