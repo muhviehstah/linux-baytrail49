@@ -1,0 +1,42 @@
+From f778dded8ae7d4af0ae8cce76e36d4f783d46f8f Mon Sep 17 00:00:00 2001
+From: Timo Sarawinski <timo@Funix.fritz.box>
+Date: Sun, 19 Feb 2017 09:27:40 +0000
+Subject: [PATCH] intel_i8042_disableW
+
+---
+ 0012-intel_i8042_disable.patch | 12 ++++++++++++
+ drivers/input/serio/i8042.c    |  2 ++
+ 2 files changed, 14 insertions(+)
+ create mode 100644 0012-intel_i8042_disable.patch
+
+diff --git a/0012-intel_i8042_disable.patch b/0012-intel_i8042_disable.patch
+new file mode 100644
+index 0000000..93df87a
+--- /dev/null
++++ b/0012-intel_i8042_disable.patch
+@@ -0,0 +1,12 @@
++diff -Naur a/drivers/input/serio/i8042.c b/drivers/input/serio/i8042.c
++--- a/drivers/input/serio/i8042.c	2015-04-13 01:12:50.000000000 +0300
+++++ b/drivers/input/serio/i8042.c	2015-04-22 12:18:50.519771077 +0300
++@@ -1492,6 +1492,8 @@
++ 
++ 	dbg_init();
++ 
+++	return -ENODEV;
+++
++ 	err = i8042_platform_init();
++ 	if (err)
++ 		return err;
+diff --git a/drivers/input/serio/i8042.c b/drivers/input/serio/i8042.c
+index 89abfdb..c99ce28 100644
+--- a/drivers/input/serio/i8042.c
++++ b/drivers/input/serio/i8042.c
+@@ -1589,6 +1589,8 @@ static int __init i8042_init(void)
+ 
+ 	dbg_init();
+ 
++	return -ENODEV;
++
+ 	err = i8042_platform_init();
+ 	if (err)
+ 		return err;
