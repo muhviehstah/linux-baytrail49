@@ -33,6 +33,7 @@
 *.lz4
 *.lzo
 *.gcno
+*.ll
 modules.builtin
 Module.symvers
 *.dwo
